@@ -8,6 +8,7 @@ class Categories extends Controller
 {
     protected $categoriesModel;
     protected $utils;
+
     function __construct()
     {
         $this->categoriesModel = new \models\Categories();

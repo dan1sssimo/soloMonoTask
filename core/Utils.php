@@ -13,17 +13,15 @@ class Utils
         return $newRow;
     }
 
-    function buildTreeBranches(array &$branches, $parent_id = 0)
+    function buildTreeBranches(array $branches)
     {
-        $branch = array();
-        foreach ($branches as &$key) {
-            if ($key['parent_id'] == $parent_id) {
-                $childNode = $this->buildTreeBranches($branches, $key['categories_id']);
-                $childNode ?  $branch[$key['categories_id']] = $this->buildTreeBranches($branches, $key['categories_id']) :
-                    $branch[$key['categories_id']] = $key['categories_id'];
-                unset($key);
+        foreach ($branches as $key => &$value) {
+            if (!$branches[$key]['parent_id']) {
+                $branches[$key] = &$value;
+            } else {
+                $branches[$branches[$key]['parent_id']][$key] = &$value;
             }
         }
-        return $branch;
+        return $branches;
     }
 }
